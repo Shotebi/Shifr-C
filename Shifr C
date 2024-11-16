@@ -1,0 +1,109 @@
+print("Приветствую дорогой пользователь :)")
+
+print("Выберите направление шифрования/дешифрования (1 для шифрования, 2 для дешифрования): ")
+
+
+# кодируем или декодируем
+def text_direction():
+    while True:
+        x = input()
+        if x == "1":
+            return x
+        elif x == "2":
+            return x
+        else:
+            print("Пожалуйста, введите 1 или 2.")
+
+
+# выбор языка
+def language():
+    while True:
+        x = input()
+        if x.lower() == "русский":
+            return x
+        elif x.lower() == "английский":
+            return x
+        else:
+            print("Английский или Русский ?")
+
+
+# на сколько сдвигаем текст
+def shift_right():
+    while True:
+        x = input()
+        if x.isdigit() and int(x) > 0:
+            return x
+        else:
+            print("Попробуй использовать цифры")
+
+
+# кодируем на английском
+def encoder_en(text, shift):
+    result = ""
+    for i in text:
+        if i.isalpha():
+            offset = 65 if i.isupper() else 97
+            shifted = (ord(i) - offset + shift) % 26
+            result += chr(shifted + offset)
+        else:
+            result += i
+    return result
+
+
+# кодируем на русском
+def encoder_ru(text, shift):
+    result = ""
+    for i in text:
+        if i.isalpha():
+            offset = 1040 if 'А' <= i <= 'Я' else 1072
+            shifted = (ord(i) - offset + shift) % 32
+            result += chr(shifted + offset)
+        else:
+            result += i
+    return result
+
+
+# декодируем английский текст
+def caesar_decrypt_en(text, shift):
+    result = ""
+    for i in text:
+        if i.isalpha():
+            offset = 65 if 'A' <= i <= 'Z' else 97
+            shifted = (ord(i) - offset + 26 - shift) % 26
+            result += chr(shifted + offset)
+        else:
+            result += i
+    return result
+
+
+# декодируем русский текст
+def caesar_decrypt_ru(text, shift):
+    result = ""
+    for i in text:
+        if i.isalpha():
+            offset = 1040 if 'А' <= i <= 'Я' else 1072
+            shifted = (ord(i) - offset + 32 - shift) % 32
+            result += chr(shifted + offset)
+        else:
+            result += i
+    return result
+
+
+# логика программы
+print("Шифруем или дешифруем? ( 1 / 2 ) ")
+direction = text_direction()
+print("Выберите язык вашего текста: Английский или Русский? ")
+Cipher_language = language()
+print("На сколько символов будем смещать ваш текст?")
+shift = shift_right()
+user_text = input("Напишите сюда ваш текст: ")
+if direction == str(1):
+    if Cipher_language.lower() == "английский":
+        print(encoder_en(user_text, int(shift)))
+    elif Cipher_language.lower() == "русский":
+        print((encoder_ru(user_text, int(shift))))
+elif direction == str(2):
+    if Cipher_language.lower() == "английский":
+        print(caesar_decrypt_en(user_text, int(shift)))
+    elif Cipher_language.lower() == "русский":
+        print(caesar_decrypt_ru(user_text, int(shift)))
